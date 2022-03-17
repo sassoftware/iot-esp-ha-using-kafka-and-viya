@@ -1,0 +1,52 @@
+<project name="HA_Output" threads="1" pubsub="auto" heartbeat-interval="1">
+  <description><![CDATA[Read data from the outbound Kafka topic and write to a file.]]></description>
+  <metadata>
+    <meta id="studioUploadedBy">totuni</meta>
+    <meta id="studioTags">output, adapter, connector, Kafka</meta>
+    <meta id="studioUploaded">1616789473400</meta>
+    <meta id="studioModifiedBy">totuni</meta>
+    <meta id="studioModified">1617109439137</meta>
+    <meta id="layout">{"ESP_CQ":{"Do_Nothing":{"x":-315,"y":-60},"ESP_incoming_source_window":{"x":-315,"y":-225}}}</meta>
+  </metadata>
+  <contqueries>
+    <contquery name="ESP_CQ">
+      <windows>
+        <window-source pubsub="true" index="pi_EMPTY" insert-only="true" autogen-key="true" name="ESP_incoming_source_window">
+          <description><![CDATA[Adapter / connector to read from topic and write to file.]]></description>
+          <schema>
+            <fields>
+              <field name="index_esp" type="int64" key="true"/>
+              <field name="Record_Counter" type="int64"/>
+              <field name="MemoryUsed" type="int64"/>
+              <field name="MemoryFree" type="int64"/>
+              <field name="epoch" type="int64"/>
+              <field name="sum20" type="double"/>
+            </fields>
+          </schema>
+          <connectors>
+            <connector class="adapter" name="outbound">
+              <properties>
+                <property name="type"><![CDATA[pub]]></property>
+                <property name="url"><![CDATA[url="dfESP://HAtopic1:31415/ESP_Project_HA_Kafka/ESP_CQ/ESP_outgoing_window?snapshot=false"]]></property>
+                <property name="command"><![CDATA[dfesp_fs_adapter -C type=sub,fsname=/mnt/viya-share/esp/HA_Output_data.csv,fstype=csv,dateformat='%Y-%m-%d %H:%M:%S',header=full,loglevel=trace,transport=kafka,transportconfigfile=/mnt/viya-share/esp/kafkasub.cfg]]></property>
+              </properties>
+            </connector>
+          </connectors>
+        </window-source>
+        <window-functional index="pi_EMPTY" name="Do_Nothing">
+          <description><![CDATA[This function window is just here to get rid of a warning message.  It does nothing.]]></description>
+          <schema>
+            <fields>
+              <field name="index_esp" type="int64" key="true"/>
+              <field name="MemoryUsed" type="int64"/>
+              <field name="MemoryFree" type="int64"/>
+            </fields>
+          </schema>
+        </window-functional>
+      </windows>
+      <edges>
+        <edge source="ESP_incoming_source_window" target="Do_Nothing"/>
+      </edges>
+    </contquery>
+  </contqueries>
+</project>
