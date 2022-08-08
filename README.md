@@ -2,7 +2,7 @@
 
 In this repository, you'll Learn how to create and deploy an ESP high availability system using Kafka as the message broker.
 
-[![SAS ESP High Availability using Kafka on Viya 4](/images/HA1.PNG)](https://players.brightcove.net/3665946608001/default_default/index.html?videoId=6255423064001 "SAS ESP High Availability")
+[![SAS ESP High Availability using Kafka on Viya 4](/images/HA1.png)](https://players.brightcove.net/3665946608001/default_default/index.html?videoId=6255423064001 "SAS ESP High Availability")
 
 ## Overview
 
